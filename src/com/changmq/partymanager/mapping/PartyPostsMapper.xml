@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.changmq.partymanager.DAO.PartyPostsMapper" >
+  <resultMap id="BaseResultMap" type="com.changmq.partymanager.domain.PartyPosts" >
+    <id column="pp_id" property="ppId" jdbcType="INTEGER" />
+    <result column="pp_name" property="ppName" jdbcType="VARCHAR" />
+    <result column="pp_text" property="ppText" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pp_id, pp_name, pp_text
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.changmq.partymanager.domain.PartyPostsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pm_party_posts
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pm_party_posts
+    where pp_id = #{ppId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pm_party_posts
+    where pp_id = #{ppId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.changmq.partymanager.domain.PartyPostsExample" >
+    delete from pm_party_posts
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.changmq.partymanager.domain.PartyPosts" >
+    insert into pm_party_posts (pp_id, pp_name, pp_text
+      )
+    values (#{ppId,jdbcType=INTEGER}, #{ppName,jdbcType=VARCHAR}, #{ppText,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.changmq.partymanager.domain.PartyPosts" >
+    insert into pm_party_posts
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ppId != null" >
+        pp_id,
+      </if>
+      <if test="ppName != null" >
+        pp_name,
+      </if>
+      <if test="ppText != null" >
+        pp_text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ppId != null" >
+        #{ppId,jdbcType=INTEGER},
+      </if>
+      <if test="ppName != null" >
+        #{ppName,jdbcType=VARCHAR},
+      </if>
+      <if test="ppText != null" >
+        #{ppText,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.changmq.partymanager.domain.PartyPostsExample" resultType="java.lang.Integer" >
+    select count(*) from pm_party_posts
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pm_party_posts
+    <set >
+      <if test="record.ppId != null" >
+        pp_id = #{record.ppId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ppName != null" >
+        pp_name = #{record.ppName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ppText != null" >
+        pp_text = #{record.ppText,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pm_party_posts
+    set pp_id = #{record.ppId,jdbcType=INTEGER},
+      pp_name = #{record.ppName,jdbcType=VARCHAR},
+      pp_text = #{record.ppText,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.changmq.partymanager.domain.PartyPosts" >
+    update pm_party_posts
+    <set >
+      <if test="ppName != null" >
+        pp_name = #{ppName,jdbcType=VARCHAR},
+      </if>
+      <if test="ppText != null" >
+        pp_text = #{ppText,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pp_id = #{ppId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.changmq.partymanager.domain.PartyPosts" >
+    update pm_party_posts
+    set pp_name = #{ppName,jdbcType=VARCHAR},
+      pp_text = #{ppText,jdbcType=VARCHAR}
+    where pp_id = #{ppId,jdbcType=INTEGER}
+  </update>
+</mapper>

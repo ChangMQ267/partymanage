@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.changmq.partymanager.DAO.RelationOutMapper" >
+  <resultMap id="BaseResultMap" type="com.changmq.partymanager.domain.RelationOut" >
+    <id column="r_out_id" property="rOutId" jdbcType="INTEGER" />
+    <result column="pm_id" property="pmId" jdbcType="INTEGER" />
+    <result column="r_out_dues_end" property="rOutDuesEnd" jdbcType="DATE" />
+    <result column="outflow_date" property="outflowDate" jdbcType="DATE" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.changmq.partymanager.domain.RelationOutWithBLOBs" extends="BaseResultMap" >
+    <result column="work_name" property="workName" jdbcType="LONGVARCHAR" />
+    <result column="r_out_pm_receive" property="rOutPmReceive" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    r_out_id, pm_id, r_out_dues_end, outflow_date
+  </sql>
+  <sql id="Blob_Column_List" >
+    work_name, r_out_pm_receive
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.changmq.partymanager.domain.RelationOutExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pm_relation_out
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.changmq.partymanager.domain.RelationOutExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pm_relation_out
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pm_relation_out
+    where r_out_id = #{rOutId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pm_relation_out
+    where r_out_id = #{rOutId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.changmq.partymanager.domain.RelationOutExample" >
+    delete from pm_relation_out
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.changmq.partymanager.domain.RelationOutWithBLOBs" >
+    insert into pm_relation_out (r_out_id, pm_id, r_out_dues_end, 
+      outflow_date, work_name, r_out_pm_receive
+      )
+    values (#{rOutId,jdbcType=INTEGER}, #{pmId,jdbcType=INTEGER}, #{rOutDuesEnd,jdbcType=DATE}, 
+      #{outflowDate,jdbcType=DATE}, #{workName,jdbcType=LONGVARCHAR}, #{rOutPmReceive,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.changmq.partymanager.domain.RelationOutWithBLOBs" >
+    insert into pm_relation_out
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rOutId != null" >
+        r_out_id,
+      </if>
+      <if test="pmId != null" >
+        pm_id,
+      </if>
+      <if test="rOutDuesEnd != null" >
+        r_out_dues_end,
+      </if>
+      <if test="outflowDate != null" >
+        outflow_date,
+      </if>
+      <if test="workName != null" >
+        work_name,
+      </if>
+      <if test="rOutPmReceive != null" >
+        r_out_pm_receive,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rOutId != null" >
+        #{rOutId,jdbcType=INTEGER},
+      </if>
+      <if test="pmId != null" >
+        #{pmId,jdbcType=INTEGER},
+      </if>
+      <if test="rOutDuesEnd != null" >
+        #{rOutDuesEnd,jdbcType=DATE},
+      </if>
+      <if test="outflowDate != null" >
+        #{outflowDate,jdbcType=DATE},
+      </if>
+      <if test="workName != null" >
+        #{workName,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="rOutPmReceive != null" >
+        #{rOutPmReceive,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.changmq.partymanager.domain.RelationOutExample" resultType="java.lang.Integer" >
+    select count(*) from pm_relation_out
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pm_relation_out
+    <set >
+      <if test="record.rOutId != null" >
+        r_out_id = #{record.rOutId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pmId != null" >
+        pm_id = #{record.pmId,jdbcType=INTEGER},
+      </if>
+      <if test="record.rOutDuesEnd != null" >
+        r_out_dues_end = #{record.rOutDuesEnd,jdbcType=DATE},
+      </if>
+      <if test="record.outflowDate != null" >
+        outflow_date = #{record.outflowDate,jdbcType=DATE},
+      </if>
+      <if test="record.workName != null" >
+        work_name = #{record.workName,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.rOutPmReceive != null" >
+        r_out_pm_receive = #{record.rOutPmReceive,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update pm_relation_out
+    set r_out_id = #{record.rOutId,jdbcType=INTEGER},
+      pm_id = #{record.pmId,jdbcType=INTEGER},
+      r_out_dues_end = #{record.rOutDuesEnd,jdbcType=DATE},
+      outflow_date = #{record.outflowDate,jdbcType=DATE},
+      work_name = #{record.workName,jdbcType=LONGVARCHAR},
+      r_out_pm_receive = #{record.rOutPmReceive,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pm_relation_out
+    set r_out_id = #{record.rOutId,jdbcType=INTEGER},
+      pm_id = #{record.pmId,jdbcType=INTEGER},
+      r_out_dues_end = #{record.rOutDuesEnd,jdbcType=DATE},
+      outflow_date = #{record.outflowDate,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.changmq.partymanager.domain.RelationOutWithBLOBs" >
+    update pm_relation_out
+    <set >
+      <if test="pmId != null" >
+        pm_id = #{pmId,jdbcType=INTEGER},
+      </if>
+      <if test="rOutDuesEnd != null" >
+        r_out_dues_end = #{rOutDuesEnd,jdbcType=DATE},
+      </if>
+      <if test="outflowDate != null" >
+        outflow_date = #{outflowDate,jdbcType=DATE},
+      </if>
+      <if test="workName != null" >
+        work_name = #{workName,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="rOutPmReceive != null" >
+        r_out_pm_receive = #{rOutPmReceive,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where r_out_id = #{rOutId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.changmq.partymanager.domain.RelationOutWithBLOBs" >
+    update pm_relation_out
+    set pm_id = #{pmId,jdbcType=INTEGER},
+      r_out_dues_end = #{rOutDuesEnd,jdbcType=DATE},
+      outflow_date = #{outflowDate,jdbcType=DATE},
+      work_name = #{workName,jdbcType=LONGVARCHAR},
+      r_out_pm_receive = #{rOutPmReceive,jdbcType=LONGVARCHAR}
+    where r_out_id = #{rOutId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.changmq.partymanager.domain.RelationOut" >
+    update pm_relation_out
+    set pm_id = #{pmId,jdbcType=INTEGER},
+      r_out_dues_end = #{rOutDuesEnd,jdbcType=DATE},
+      outflow_date = #{outflowDate,jdbcType=DATE}
+    where r_out_id = #{rOutId,jdbcType=INTEGER}
+  </update>
+</mapper>

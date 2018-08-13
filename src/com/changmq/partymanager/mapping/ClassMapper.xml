@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.changmq.partymanager.DAO.ClassMapper" >
+  <resultMap id="BaseResultMap" type="com.changmq.partymanager.domain.Class" >
+    <id column="class_id" property="classId" jdbcType="INTEGER" />
+    <result column="c_faculty" property="cFaculty" jdbcType="VARCHAR" />
+    <result column="c_grade" property="cGrade" jdbcType="VARCHAR" />
+    <result column="c_no" property="cNo" jdbcType="INTEGER" />
+    <result column="c_profession" property="cProfession" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    class_id, c_faculty, c_grade, c_no, c_profession
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.changmq.partymanager.domain.ClassExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pm_class
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pm_class
+    where class_id = #{classId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pm_class
+    where class_id = #{classId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.changmq.partymanager.domain.ClassExample" >
+    delete from pm_class
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.changmq.partymanager.domain.Class" >
+    insert into pm_class (class_id, c_faculty, c_grade, 
+      c_no, c_profession)
+    values (#{classId,jdbcType=INTEGER}, #{cFaculty,jdbcType=VARCHAR}, #{cGrade,jdbcType=VARCHAR}, 
+      #{cNo,jdbcType=INTEGER}, #{cProfession,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.changmq.partymanager.domain.Class" >
+    insert into pm_class
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="classId != null" >
+        class_id,
+      </if>
+      <if test="cFaculty != null" >
+        c_faculty,
+      </if>
+      <if test="cGrade != null" >
+        c_grade,
+      </if>
+      <if test="cNo != null" >
+        c_no,
+      </if>
+      <if test="cProfession != null" >
+        c_profession,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="classId != null" >
+        #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="cFaculty != null" >
+        #{cFaculty,jdbcType=VARCHAR},
+      </if>
+      <if test="cGrade != null" >
+        #{cGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="cNo != null" >
+        #{cNo,jdbcType=INTEGER},
+      </if>
+      <if test="cProfession != null" >
+        #{cProfession,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.changmq.partymanager.domain.ClassExample" resultType="java.lang.Integer" >
+    select count(*) from pm_class
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pm_class
+    <set >
+      <if test="record.classId != null" >
+        class_id = #{record.classId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cFaculty != null" >
+        c_faculty = #{record.cFaculty,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cGrade != null" >
+        c_grade = #{record.cGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cNo != null" >
+        c_no = #{record.cNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.cProfession != null" >
+        c_profession = #{record.cProfession,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pm_class
+    set class_id = #{record.classId,jdbcType=INTEGER},
+      c_faculty = #{record.cFaculty,jdbcType=VARCHAR},
+      c_grade = #{record.cGrade,jdbcType=VARCHAR},
+      c_no = #{record.cNo,jdbcType=INTEGER},
+      c_profession = #{record.cProfession,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.changmq.partymanager.domain.Class" >
+    update pm_class
+    <set >
+      <if test="cFaculty != null" >
+        c_faculty = #{cFaculty,jdbcType=VARCHAR},
+      </if>
+      <if test="cGrade != null" >
+        c_grade = #{cGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="cNo != null" >
+        c_no = #{cNo,jdbcType=INTEGER},
+      </if>
+      <if test="cProfession != null" >
+        c_profession = #{cProfession,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where class_id = #{classId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.changmq.partymanager.domain.Class" >
+    update pm_class
+    set c_faculty = #{cFaculty,jdbcType=VARCHAR},
+      c_grade = #{cGrade,jdbcType=VARCHAR},
+      c_no = #{cNo,jdbcType=INTEGER},
+      c_profession = #{cProfession,jdbcType=VARCHAR}
+    where class_id = #{classId,jdbcType=INTEGER}
+  </update>
+</mapper>

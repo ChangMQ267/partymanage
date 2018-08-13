@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.changmq.partymanager.DAO.DuesMapper" >
+  <resultMap id="BaseResultMap" type="com.changmq.partymanager.domain.Dues" >
+    <id column="d_id" property="dId" jdbcType="INTEGER" />
+    <result column="pm_id" property="pmId" jdbcType="INTEGER" />
+    <result column="d_year" property="dYear" jdbcType="VARCHAR" />
+    <result column="d_jan" property="dJan" jdbcType="REAL" />
+    <result column="d_feb" property="dFeb" jdbcType="REAL" />
+    <result column="d_mar" property="dMar" jdbcType="REAL" />
+    <result column="d_apr" property="dApr" jdbcType="REAL" />
+    <result column="d_may" property="dMay" jdbcType="REAL" />
+    <result column="d_jun" property="dJun" jdbcType="REAL" />
+    <result column="d_jul" property="dJul" jdbcType="REAL" />
+    <result column="d_aug" property="dAug" jdbcType="REAL" />
+    <result column="d_sept" property="dSept" jdbcType="REAL" />
+    <result column="d_oct" property="dOct" jdbcType="REAL" />
+    <result column="d_nov" property="dNov" jdbcType="REAL" />
+    <result column="d_dec" property="dDec" jdbcType="REAL" />
+    <result column="d_total" property="dTotal" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    d_id, pm_id, d_year, d_jan, d_feb, d_mar, d_apr, d_may, d_jun, d_jul, d_aug, d_sept, 
+    d_oct, d_nov, d_dec, d_total
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.changmq.partymanager.domain.DuesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pm_dues
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pm_dues
+    where d_id = #{dId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pm_dues
+    where d_id = #{dId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.changmq.partymanager.domain.DuesExample" >
+    delete from pm_dues
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.changmq.partymanager.domain.Dues" >
+    insert into pm_dues (d_id, pm_id, d_year, 
+      d_jan, d_feb, d_mar, d_apr, 
+      d_may, d_jun, d_jul, d_aug, 
+      d_sept, d_oct, d_nov, d_dec, 
+      d_total)
+    values (#{dId,jdbcType=INTEGER}, #{pmId,jdbcType=INTEGER}, #{dYear,jdbcType=VARCHAR}, 
+      #{dJan,jdbcType=REAL}, #{dFeb,jdbcType=REAL}, #{dMar,jdbcType=REAL}, #{dApr,jdbcType=REAL}, 
+      #{dMay,jdbcType=REAL}, #{dJun,jdbcType=REAL}, #{dJul,jdbcType=REAL}, #{dAug,jdbcType=REAL}, 
+      #{dSept,jdbcType=REAL}, #{dOct,jdbcType=REAL}, #{dNov,jdbcType=REAL}, #{dDec,jdbcType=REAL}, 
+      #{dTotal,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.changmq.partymanager.domain.Dues" >
+    insert into pm_dues
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dId != null" >
+        d_id,
+      </if>
+      <if test="pmId != null" >
+        pm_id,
+      </if>
+      <if test="dYear != null" >
+        d_year,
+      </if>
+      <if test="dJan != null" >
+        d_jan,
+      </if>
+      <if test="dFeb != null" >
+        d_feb,
+      </if>
+      <if test="dMar != null" >
+        d_mar,
+      </if>
+      <if test="dApr != null" >
+        d_apr,
+      </if>
+      <if test="dMay != null" >
+        d_may,
+      </if>
+      <if test="dJun != null" >
+        d_jun,
+      </if>
+      <if test="dJul != null" >
+        d_jul,
+      </if>
+      <if test="dAug != null" >
+        d_aug,
+      </if>
+      <if test="dSept != null" >
+        d_sept,
+      </if>
+      <if test="dOct != null" >
+        d_oct,
+      </if>
+      <if test="dNov != null" >
+        d_nov,
+      </if>
+      <if test="dDec != null" >
+        d_dec,
+      </if>
+      <if test="dTotal != null" >
+        d_total,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dId != null" >
+        #{dId,jdbcType=INTEGER},
+      </if>
+      <if test="pmId != null" >
+        #{pmId,jdbcType=INTEGER},
+      </if>
+      <if test="dYear != null" >
+        #{dYear,jdbcType=VARCHAR},
+      </if>
+      <if test="dJan != null" >
+        #{dJan,jdbcType=REAL},
+      </if>
+      <if test="dFeb != null" >
+        #{dFeb,jdbcType=REAL},
+      </if>
+      <if test="dMar != null" >
+        #{dMar,jdbcType=REAL},
+      </if>
+      <if test="dApr != null" >
+        #{dApr,jdbcType=REAL},
+      </if>
+      <if test="dMay != null" >
+        #{dMay,jdbcType=REAL},
+      </if>
+      <if test="dJun != null" >
+        #{dJun,jdbcType=REAL},
+      </if>
+      <if test="dJul != null" >
+        #{dJul,jdbcType=REAL},
+      </if>
+      <if test="dAug != null" >
+        #{dAug,jdbcType=REAL},
+      </if>
+      <if test="dSept != null" >
+        #{dSept,jdbcType=REAL},
+      </if>
+      <if test="dOct != null" >
+        #{dOct,jdbcType=REAL},
+      </if>
+      <if test="dNov != null" >
+        #{dNov,jdbcType=REAL},
+      </if>
+      <if test="dDec != null" >
+        #{dDec,jdbcType=REAL},
+      </if>
+      <if test="dTotal != null" >
+        #{dTotal,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.changmq.partymanager.domain.DuesExample" resultType="java.lang.Integer" >
+    select count(*) from pm_dues
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pm_dues
+    <set >
+      <if test="record.dId != null" >
+        d_id = #{record.dId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pmId != null" >
+        pm_id = #{record.pmId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dYear != null" >
+        d_year = #{record.dYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dJan != null" >
+        d_jan = #{record.dJan,jdbcType=REAL},
+      </if>
+      <if test="record.dFeb != null" >
+        d_feb = #{record.dFeb,jdbcType=REAL},
+      </if>
+      <if test="record.dMar != null" >
+        d_mar = #{record.dMar,jdbcType=REAL},
+      </if>
+      <if test="record.dApr != null" >
+        d_apr = #{record.dApr,jdbcType=REAL},
+      </if>
+      <if test="record.dMay != null" >
+        d_may = #{record.dMay,jdbcType=REAL},
+      </if>
+      <if test="record.dJun != null" >
+        d_jun = #{record.dJun,jdbcType=REAL},
+      </if>
+      <if test="record.dJul != null" >
+        d_jul = #{record.dJul,jdbcType=REAL},
+      </if>
+      <if test="record.dAug != null" >
+        d_aug = #{record.dAug,jdbcType=REAL},
+      </if>
+      <if test="record.dSept != null" >
+        d_sept = #{record.dSept,jdbcType=REAL},
+      </if>
+      <if test="record.dOct != null" >
+        d_oct = #{record.dOct,jdbcType=REAL},
+      </if>
+      <if test="record.dNov != null" >
+        d_nov = #{record.dNov,jdbcType=REAL},
+      </if>
+      <if test="record.dDec != null" >
+        d_dec = #{record.dDec,jdbcType=REAL},
+      </if>
+      <if test="record.dTotal != null" >
+        d_total = #{record.dTotal,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pm_dues
+    set d_id = #{record.dId,jdbcType=INTEGER},
+      pm_id = #{record.pmId,jdbcType=INTEGER},
+      d_year = #{record.dYear,jdbcType=VARCHAR},
+      d_jan = #{record.dJan,jdbcType=REAL},
+      d_feb = #{record.dFeb,jdbcType=REAL},
+      d_mar = #{record.dMar,jdbcType=REAL},
+      d_apr = #{record.dApr,jdbcType=REAL},
+      d_may = #{record.dMay,jdbcType=REAL},
+      d_jun = #{record.dJun,jdbcType=REAL},
+      d_jul = #{record.dJul,jdbcType=REAL},
+      d_aug = #{record.dAug,jdbcType=REAL},
+      d_sept = #{record.dSept,jdbcType=REAL},
+      d_oct = #{record.dOct,jdbcType=REAL},
+      d_nov = #{record.dNov,jdbcType=REAL},
+      d_dec = #{record.dDec,jdbcType=REAL},
+      d_total = #{record.dTotal,jdbcType=REAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.changmq.partymanager.domain.Dues" >
+    update pm_dues
+    <set >
+      <if test="pmId != null" >
+        pm_id = #{pmId,jdbcType=INTEGER},
+      </if>
+      <if test="dYear != null" >
+        d_year = #{dYear,jdbcType=VARCHAR},
+      </if>
+      <if test="dJan != null" >
+        d_jan = #{dJan,jdbcType=REAL},
+      </if>
+      <if test="dFeb != null" >
+        d_feb = #{dFeb,jdbcType=REAL},
+      </if>
+      <if test="dMar != null" >
+        d_mar = #{dMar,jdbcType=REAL},
+      </if>
+      <if test="dApr != null" >
+        d_apr = #{dApr,jdbcType=REAL},
+      </if>
+      <if test="dMay != null" >
+        d_may = #{dMay,jdbcType=REAL},
+      </if>
+      <if test="dJun != null" >
+        d_jun = #{dJun,jdbcType=REAL},
+      </if>
+      <if test="dJul != null" >
+        d_jul = #{dJul,jdbcType=REAL},
+      </if>
+      <if test="dAug != null" >
+        d_aug = #{dAug,jdbcType=REAL},
+      </if>
+      <if test="dSept != null" >
+        d_sept = #{dSept,jdbcType=REAL},
+      </if>
+      <if test="dOct != null" >
+        d_oct = #{dOct,jdbcType=REAL},
+      </if>
+      <if test="dNov != null" >
+        d_nov = #{dNov,jdbcType=REAL},
+      </if>
+      <if test="dDec != null" >
+        d_dec = #{dDec,jdbcType=REAL},
+      </if>
+      <if test="dTotal != null" >
+        d_total = #{dTotal,jdbcType=REAL},
+      </if>
+    </set>
+    where d_id = #{dId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.changmq.partymanager.domain.Dues" >
+    update pm_dues
+    set pm_id = #{pmId,jdbcType=INTEGER},
+      d_year = #{dYear,jdbcType=VARCHAR},
+      d_jan = #{dJan,jdbcType=REAL},
+      d_feb = #{dFeb,jdbcType=REAL},
+      d_mar = #{dMar,jdbcType=REAL},
+      d_apr = #{dApr,jdbcType=REAL},
+      d_may = #{dMay,jdbcType=REAL},
+      d_jun = #{dJun,jdbcType=REAL},
+      d_jul = #{dJul,jdbcType=REAL},
+      d_aug = #{dAug,jdbcType=REAL},
+      d_sept = #{dSept,jdbcType=REAL},
+      d_oct = #{dOct,jdbcType=REAL},
+      d_nov = #{dNov,jdbcType=REAL},
+      d_dec = #{dDec,jdbcType=REAL},
+      d_total = #{dTotal,jdbcType=REAL}
+    where d_id = #{dId,jdbcType=INTEGER}
+  </update>
+</mapper>

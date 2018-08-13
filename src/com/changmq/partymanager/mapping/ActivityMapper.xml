@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.changmq.partymanager.DAO.ActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.changmq.partymanager.domain.Activity" >
+    <id column="a_id" property="aId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="pb_id" property="pbId" jdbcType="INTEGER" />
+    <result column="a_name" property="aName" jdbcType="VARCHAR" />
+    <result column="a_date" property="aDate" jdbcType="TIMESTAMP" />
+    <result column="a_person_num" property="aPersonNum" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.changmq.partymanager.domain.ActivityWithBLOBs" extends="BaseResultMap" >
+    <result column="a_site" property="aSite" jdbcType="LONGVARCHAR" />
+    <result column="a_absent" property="aAbsent" jdbcType="LONGVARCHAR" />
+    <result column="a_content" property="aContent" jdbcType="LONGVARCHAR" />
+    <result column="a_text" property="aText" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    a_id, user_id, pb_id, a_name, a_date, a_person_num
+  </sql>
+  <sql id="Blob_Column_List" >
+    a_site, a_absent, a_content, a_text
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.changmq.partymanager.domain.ActivityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pm_activity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.changmq.partymanager.domain.ActivityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pm_activity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pm_activity
+    where a_id = #{aId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pm_activity
+    where a_id = #{aId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.changmq.partymanager.domain.ActivityExample" >
+    delete from pm_activity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.changmq.partymanager.domain.ActivityWithBLOBs" >
+    insert into pm_activity (a_id, user_id, pb_id, 
+      a_name, a_date, a_person_num, 
+      a_site, a_absent, a_content, 
+      a_text)
+    values (#{aId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{pbId,jdbcType=INTEGER}, 
+      #{aName,jdbcType=VARCHAR}, #{aDate,jdbcType=TIMESTAMP}, #{aPersonNum,jdbcType=INTEGER}, 
+      #{aSite,jdbcType=LONGVARCHAR}, #{aAbsent,jdbcType=LONGVARCHAR}, #{aContent,jdbcType=LONGVARCHAR}, 
+      #{aText,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.changmq.partymanager.domain.ActivityWithBLOBs" >
+    insert into pm_activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="aId != null" >
+        a_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="pbId != null" >
+        pb_id,
+      </if>
+      <if test="aName != null" >
+        a_name,
+      </if>
+      <if test="aDate != null" >
+        a_date,
+      </if>
+      <if test="aPersonNum != null" >
+        a_person_num,
+      </if>
+      <if test="aSite != null" >
+        a_site,
+      </if>
+      <if test="aAbsent != null" >
+        a_absent,
+      </if>
+      <if test="aContent != null" >
+        a_content,
+      </if>
+      <if test="aText != null" >
+        a_text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="aId != null" >
+        #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="pbId != null" >
+        #{pbId,jdbcType=INTEGER},
+      </if>
+      <if test="aName != null" >
+        #{aName,jdbcType=VARCHAR},
+      </if>
+      <if test="aDate != null" >
+        #{aDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aPersonNum != null" >
+        #{aPersonNum,jdbcType=INTEGER},
+      </if>
+      <if test="aSite != null" >
+        #{aSite,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="aAbsent != null" >
+        #{aAbsent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="aContent != null" >
+        #{aContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="aText != null" >
+        #{aText,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.changmq.partymanager.domain.ActivityExample" resultType="java.lang.Integer" >
+    select count(*) from pm_activity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pm_activity
+    <set >
+      <if test="record.aId != null" >
+        a_id = #{record.aId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pbId != null" >
+        pb_id = #{record.pbId,jdbcType=INTEGER},
+      </if>
+      <if test="record.aName != null" >
+        a_name = #{record.aName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aDate != null" >
+        a_date = #{record.aDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.aPersonNum != null" >
+        a_person_num = #{record.aPersonNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.aSite != null" >
+        a_site = #{record.aSite,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.aAbsent != null" >
+        a_absent = #{record.aAbsent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.aContent != null" >
+        a_content = #{record.aContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.aText != null" >
+        a_text = #{record.aText,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update pm_activity
+    set a_id = #{record.aId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      pb_id = #{record.pbId,jdbcType=INTEGER},
+      a_name = #{record.aName,jdbcType=VARCHAR},
+      a_date = #{record.aDate,jdbcType=TIMESTAMP},
+      a_person_num = #{record.aPersonNum,jdbcType=INTEGER},
+      a_site = #{record.aSite,jdbcType=LONGVARCHAR},
+      a_absent = #{record.aAbsent,jdbcType=LONGVARCHAR},
+      a_content = #{record.aContent,jdbcType=LONGVARCHAR},
+      a_text = #{record.aText,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pm_activity
+    set a_id = #{record.aId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      pb_id = #{record.pbId,jdbcType=INTEGER},
+      a_name = #{record.aName,jdbcType=VARCHAR},
+      a_date = #{record.aDate,jdbcType=TIMESTAMP},
+      a_person_num = #{record.aPersonNum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.changmq.partymanager.domain.ActivityWithBLOBs" >
+    update pm_activity
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="pbId != null" >
+        pb_id = #{pbId,jdbcType=INTEGER},
+      </if>
+      <if test="aName != null" >
+        a_name = #{aName,jdbcType=VARCHAR},
+      </if>
+      <if test="aDate != null" >
+        a_date = #{aDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aPersonNum != null" >
+        a_person_num = #{aPersonNum,jdbcType=INTEGER},
+      </if>
+      <if test="aSite != null" >
+        a_site = #{aSite,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="aAbsent != null" >
+        a_absent = #{aAbsent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="aContent != null" >
+        a_content = #{aContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="aText != null" >
+        a_text = #{aText,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where a_id = #{aId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.changmq.partymanager.domain.ActivityWithBLOBs" >
+    update pm_activity
+    set user_id = #{userId,jdbcType=INTEGER},
+      pb_id = #{pbId,jdbcType=INTEGER},
+      a_name = #{aName,jdbcType=VARCHAR},
+      a_date = #{aDate,jdbcType=TIMESTAMP},
+      a_person_num = #{aPersonNum,jdbcType=INTEGER},
+      a_site = #{aSite,jdbcType=LONGVARCHAR},
+      a_absent = #{aAbsent,jdbcType=LONGVARCHAR},
+      a_content = #{aContent,jdbcType=LONGVARCHAR},
+      a_text = #{aText,jdbcType=LONGVARCHAR}
+    where a_id = #{aId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.changmq.partymanager.domain.Activity" >
+    update pm_activity
+    set user_id = #{userId,jdbcType=INTEGER},
+      pb_id = #{pbId,jdbcType=INTEGER},
+      a_name = #{aName,jdbcType=VARCHAR},
+      a_date = #{aDate,jdbcType=TIMESTAMP},
+      a_person_num = #{aPersonNum,jdbcType=INTEGER}
+    where a_id = #{aId,jdbcType=INTEGER}
+  </update>
+</mapper>

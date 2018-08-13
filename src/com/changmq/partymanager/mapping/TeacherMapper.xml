@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.changmq.partymanager.DAO.TeacherMapper" >
+  <resultMap id="BaseResultMap" type="com.changmq.partymanager.domain.Teacher" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="pb_id" property="pbId" jdbcType="INTEGER" />
+    <result column="ps_id" property="psId" jdbcType="INTEGER" />
+    <result column="pa_id" property="paId" jdbcType="INTEGER" />
+    <result column="pm_id" property="pmId" jdbcType="INTEGER" />
+    <result column="nation_id" property="nationId" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="moblie" property="moblie" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="user_state" property="userState" jdbcType="BIT" />
+    <result column="user_type" property="userType" jdbcType="INTEGER" />
+    <result column="gender" property="gender" jdbcType="INTEGER" />
+    <result column="pp_id" property="ppId" jdbcType="INTEGER" />
+    <result column="t_no" property="tNo" jdbcType="VARCHAR" />
+    <result column="t_admin" property="tAdmin" jdbcType="BIT" />
+    <result column="t_age" property="tAge" jdbcType="INTEGER" />
+    <result column="t_birthday" property="tBirthday" jdbcType="DATE" />
+    <result column="t_work_start_time" property="tWorkStartTime" jdbcType="DATE" />
+    <result column="t_education" property="tEducation" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    user_id, pb_id, ps_id, pa_id, pm_id, nation_id, user_name, password, email, moblie, 
+    qq, user_state, user_type, gender, pp_id, t_no, t_admin, t_age, t_birthday, t_work_start_time, 
+    t_education
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.changmq.partymanager.domain.TeacherExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pm_user_teacher
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pm_user_teacher
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pm_user_teacher
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.changmq.partymanager.domain.TeacherExample" >
+    delete from pm_user_teacher
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.changmq.partymanager.domain.Teacher" >
+    insert into pm_user_teacher (user_id, pb_id, ps_id, 
+      pa_id, pm_id, nation_id, 
+      user_name, password, email, 
+      moblie, qq, user_state, 
+      user_type, gender, pp_id, 
+      t_no, t_admin, t_age, t_birthday, 
+      t_work_start_time, t_education)
+    values (#{userId,jdbcType=INTEGER}, #{pbId,jdbcType=INTEGER}, #{psId,jdbcType=INTEGER}, 
+      #{paId,jdbcType=INTEGER}, #{pmId,jdbcType=INTEGER}, #{nationId,jdbcType=INTEGER}, 
+      #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{moblie,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{userState,jdbcType=BIT}, 
+      #{userType,jdbcType=INTEGER}, #{gender,jdbcType=INTEGER}, #{ppId,jdbcType=INTEGER}, 
+      #{tNo,jdbcType=VARCHAR}, #{tAdmin,jdbcType=BIT}, #{tAge,jdbcType=INTEGER}, #{tBirthday,jdbcType=DATE}, 
+      #{tWorkStartTime,jdbcType=DATE}, #{tEducation,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.changmq.partymanager.domain.Teacher" >
+    insert into pm_user_teacher
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="pbId != null" >
+        pb_id,
+      </if>
+      <if test="psId != null" >
+        ps_id,
+      </if>
+      <if test="paId != null" >
+        pa_id,
+      </if>
+      <if test="pmId != null" >
+        pm_id,
+      </if>
+      <if test="nationId != null" >
+        nation_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="moblie != null" >
+        moblie,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="userState != null" >
+        user_state,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="ppId != null" >
+        pp_id,
+      </if>
+      <if test="tNo != null" >
+        t_no,
+      </if>
+      <if test="tAdmin != null" >
+        t_admin,
+      </if>
+      <if test="tAge != null" >
+        t_age,
+      </if>
+      <if test="tBirthday != null" >
+        t_birthday,
+      </if>
+      <if test="tWorkStartTime != null" >
+        t_work_start_time,
+      </if>
+      <if test="tEducation != null" >
+        t_education,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="pbId != null" >
+        #{pbId,jdbcType=INTEGER},
+      </if>
+      <if test="psId != null" >
+        #{psId,jdbcType=INTEGER},
+      </if>
+      <if test="paId != null" >
+        #{paId,jdbcType=INTEGER},
+      </if>
+      <if test="pmId != null" >
+        #{pmId,jdbcType=INTEGER},
+      </if>
+      <if test="nationId != null" >
+        #{nationId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="moblie != null" >
+        #{moblie,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="userState != null" >
+        #{userState,jdbcType=BIT},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="ppId != null" >
+        #{ppId,jdbcType=INTEGER},
+      </if>
+      <if test="tNo != null" >
+        #{tNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tAdmin != null" >
+        #{tAdmin,jdbcType=BIT},
+      </if>
+      <if test="tAge != null" >
+        #{tAge,jdbcType=INTEGER},
+      </if>
+      <if test="tBirthday != null" >
+        #{tBirthday,jdbcType=DATE},
+      </if>
+      <if test="tWorkStartTime != null" >
+        #{tWorkStartTime,jdbcType=DATE},
+      </if>
+      <if test="tEducation != null" >
+        #{tEducation,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.changmq.partymanager.domain.TeacherExample" resultType="java.lang.Integer" >
+    select count(*) from pm_user_teacher
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pm_user_teacher
+    <set >
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pbId != null" >
+        pb_id = #{record.pbId,jdbcType=INTEGER},
+      </if>
+      <if test="record.psId != null" >
+        ps_id = #{record.psId,jdbcType=INTEGER},
+      </if>
+      <if test="record.paId != null" >
+        pa_id = #{record.paId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pmId != null" >
+        pm_id = #{record.pmId,jdbcType=INTEGER},
+      </if>
+      <if test="record.nationId != null" >
+        nation_id = #{record.nationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userName != null" >
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.moblie != null" >
+        moblie = #{record.moblie,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qq != null" >
+        qq = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userState != null" >
+        user_state = #{record.userState,jdbcType=BIT},
+      </if>
+      <if test="record.userType != null" >
+        user_type = #{record.userType,jdbcType=INTEGER},
+      </if>
+      <if test="record.gender != null" >
+        gender = #{record.gender,jdbcType=INTEGER},
+      </if>
+      <if test="record.ppId != null" >
+        pp_id = #{record.ppId,jdbcType=INTEGER},
+      </if>
+      <if test="record.tNo != null" >
+        t_no = #{record.tNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tAdmin != null" >
+        t_admin = #{record.tAdmin,jdbcType=BIT},
+      </if>
+      <if test="record.tAge != null" >
+        t_age = #{record.tAge,jdbcType=INTEGER},
+      </if>
+      <if test="record.tBirthday != null" >
+        t_birthday = #{record.tBirthday,jdbcType=DATE},
+      </if>
+      <if test="record.tWorkStartTime != null" >
+        t_work_start_time = #{record.tWorkStartTime,jdbcType=DATE},
+      </if>
+      <if test="record.tEducation != null" >
+        t_education = #{record.tEducation,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pm_user_teacher
+    set user_id = #{record.userId,jdbcType=INTEGER},
+      pb_id = #{record.pbId,jdbcType=INTEGER},
+      ps_id = #{record.psId,jdbcType=INTEGER},
+      pa_id = #{record.paId,jdbcType=INTEGER},
+      pm_id = #{record.pmId,jdbcType=INTEGER},
+      nation_id = #{record.nationId,jdbcType=INTEGER},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      moblie = #{record.moblie,jdbcType=VARCHAR},
+      qq = #{record.qq,jdbcType=VARCHAR},
+      user_state = #{record.userState,jdbcType=BIT},
+      user_type = #{record.userType,jdbcType=INTEGER},
+      gender = #{record.gender,jdbcType=INTEGER},
+      pp_id = #{record.ppId,jdbcType=INTEGER},
+      t_no = #{record.tNo,jdbcType=VARCHAR},
+      t_admin = #{record.tAdmin,jdbcType=BIT},
+      t_age = #{record.tAge,jdbcType=INTEGER},
+      t_birthday = #{record.tBirthday,jdbcType=DATE},
+      t_work_start_time = #{record.tWorkStartTime,jdbcType=DATE},
+      t_education = #{record.tEducation,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.changmq.partymanager.domain.Teacher" >
+    update pm_user_teacher
+    <set >
+      <if test="pbId != null" >
+        pb_id = #{pbId,jdbcType=INTEGER},
+      </if>
+      <if test="psId != null" >
+        ps_id = #{psId,jdbcType=INTEGER},
+      </if>
+      <if test="paId != null" >
+        pa_id = #{paId,jdbcType=INTEGER},
+      </if>
+      <if test="pmId != null" >
+        pm_id = #{pmId,jdbcType=INTEGER},
+      </if>
+      <if test="nationId != null" >
+        nation_id = #{nationId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="moblie != null" >
+        moblie = #{moblie,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="userState != null" >
+        user_state = #{userState,jdbcType=BIT},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="ppId != null" >
+        pp_id = #{ppId,jdbcType=INTEGER},
+      </if>
+      <if test="tNo != null" >
+        t_no = #{tNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tAdmin != null" >
+        t_admin = #{tAdmin,jdbcType=BIT},
+      </if>
+      <if test="tAge != null" >
+        t_age = #{tAge,jdbcType=INTEGER},
+      </if>
+      <if test="tBirthday != null" >
+        t_birthday = #{tBirthday,jdbcType=DATE},
+      </if>
+      <if test="tWorkStartTime != null" >
+        t_work_start_time = #{tWorkStartTime,jdbcType=DATE},
+      </if>
+      <if test="tEducation != null" >
+        t_education = #{tEducation,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.changmq.partymanager.domain.Teacher" >
+    update pm_user_teacher
+    set pb_id = #{pbId,jdbcType=INTEGER},
+      ps_id = #{psId,jdbcType=INTEGER},
+      pa_id = #{paId,jdbcType=INTEGER},
+      pm_id = #{pmId,jdbcType=INTEGER},
+      nation_id = #{nationId,jdbcType=INTEGER},
+      user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      moblie = #{moblie,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      user_state = #{userState,jdbcType=BIT},
+      user_type = #{userType,jdbcType=INTEGER},
+      gender = #{gender,jdbcType=INTEGER},
+      pp_id = #{ppId,jdbcType=INTEGER},
+      t_no = #{tNo,jdbcType=VARCHAR},
+      t_admin = #{tAdmin,jdbcType=BIT},
+      t_age = #{tAge,jdbcType=INTEGER},
+      t_birthday = #{tBirthday,jdbcType=DATE},
+      t_work_start_time = #{tWorkStartTime,jdbcType=DATE},
+      t_education = #{tEducation,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>

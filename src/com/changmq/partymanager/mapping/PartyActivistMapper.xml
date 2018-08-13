@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.changmq.partymanager.DAO.PartyActivistMapper" >
+  <resultMap id="BaseResultMap" type="com.changmq.partymanager.domain.PartyActivist" >
+    <id column="pa_id" property="paId" jdbcType="INTEGER" />
+    <result column="pa_apply_date" property="paApplyDate" jdbcType="DATE" />
+    <result column="pa_agree_date" property="paAgreeDate" jdbcType="DATE" />
+    <result column="pa_report_num" property="paReportNum" jdbcType="INTEGER" />
+    <result column="pa_training_date" property="paTrainingDate" jdbcType="DATE" />
+    <result column="pa_ty" property="paTy" jdbcType="VARCHAR" />
+    <result column="pa_ty_date" property="paTyDate" jdbcType="DATE" />
+    <result column="talk_date" property="talkDate" jdbcType="DATE" />
+    <result column="pr_date" property="prDate" jdbcType="DATE" />
+    <result column="inspect_date" property="inspectDate" jdbcType="DATE" />
+    <result column="pre_trial_date" property="preTrialDate" jdbcType="DATE" />
+    <result column="pub_start_date" property="pubStartDate" jdbcType="DATE" />
+    <result column="pub_end_date" property="pubEndDate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pa_id, pa_apply_date, pa_agree_date, pa_report_num, pa_training_date, pa_ty, pa_ty_date, 
+    talk_date, pr_date, inspect_date, pre_trial_date, pub_start_date, pub_end_date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.changmq.partymanager.domain.PartyActivistExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pm_party_activist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pm_party_activist
+    where pa_id = #{paId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pm_party_activist
+    where pa_id = #{paId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.changmq.partymanager.domain.PartyActivistExample" >
+    delete from pm_party_activist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.changmq.partymanager.domain.PartyActivist" >
+    insert into pm_party_activist (pa_id, pa_apply_date, pa_agree_date, 
+      pa_report_num, pa_training_date, pa_ty, 
+      pa_ty_date, talk_date, pr_date, 
+      inspect_date, pre_trial_date, pub_start_date, 
+      pub_end_date)
+    values (#{paId,jdbcType=INTEGER}, #{paApplyDate,jdbcType=DATE}, #{paAgreeDate,jdbcType=DATE}, 
+      #{paReportNum,jdbcType=INTEGER}, #{paTrainingDate,jdbcType=DATE}, #{paTy,jdbcType=VARCHAR}, 
+      #{paTyDate,jdbcType=DATE}, #{talkDate,jdbcType=DATE}, #{prDate,jdbcType=DATE}, 
+      #{inspectDate,jdbcType=DATE}, #{preTrialDate,jdbcType=DATE}, #{pubStartDate,jdbcType=DATE}, 
+      #{pubEndDate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.changmq.partymanager.domain.PartyActivist" >
+    insert into pm_party_activist
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="paId != null" >
+        pa_id,
+      </if>
+      <if test="paApplyDate != null" >
+        pa_apply_date,
+      </if>
+      <if test="paAgreeDate != null" >
+        pa_agree_date,
+      </if>
+      <if test="paReportNum != null" >
+        pa_report_num,
+      </if>
+      <if test="paTrainingDate != null" >
+        pa_training_date,
+      </if>
+      <if test="paTy != null" >
+        pa_ty,
+      </if>
+      <if test="paTyDate != null" >
+        pa_ty_date,
+      </if>
+      <if test="talkDate != null" >
+        talk_date,
+      </if>
+      <if test="prDate != null" >
+        pr_date,
+      </if>
+      <if test="inspectDate != null" >
+        inspect_date,
+      </if>
+      <if test="preTrialDate != null" >
+        pre_trial_date,
+      </if>
+      <if test="pubStartDate != null" >
+        pub_start_date,
+      </if>
+      <if test="pubEndDate != null" >
+        pub_end_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="paId != null" >
+        #{paId,jdbcType=INTEGER},
+      </if>
+      <if test="paApplyDate != null" >
+        #{paApplyDate,jdbcType=DATE},
+      </if>
+      <if test="paAgreeDate != null" >
+        #{paAgreeDate,jdbcType=DATE},
+      </if>
+      <if test="paReportNum != null" >
+        #{paReportNum,jdbcType=INTEGER},
+      </if>
+      <if test="paTrainingDate != null" >
+        #{paTrainingDate,jdbcType=DATE},
+      </if>
+      <if test="paTy != null" >
+        #{paTy,jdbcType=VARCHAR},
+      </if>
+      <if test="paTyDate != null" >
+        #{paTyDate,jdbcType=DATE},
+      </if>
+      <if test="talkDate != null" >
+        #{talkDate,jdbcType=DATE},
+      </if>
+      <if test="prDate != null" >
+        #{prDate,jdbcType=DATE},
+      </if>
+      <if test="inspectDate != null" >
+        #{inspectDate,jdbcType=DATE},
+      </if>
+      <if test="preTrialDate != null" >
+        #{preTrialDate,jdbcType=DATE},
+      </if>
+      <if test="pubStartDate != null" >
+        #{pubStartDate,jdbcType=DATE},
+      </if>
+      <if test="pubEndDate != null" >
+        #{pubEndDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.changmq.partymanager.domain.PartyActivistExample" resultType="java.lang.Integer" >
+    select count(*) from pm_party_activist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pm_party_activist
+    <set >
+      <if test="record.paId != null" >
+        pa_id = #{record.paId,jdbcType=INTEGER},
+      </if>
+      <if test="record.paApplyDate != null" >
+        pa_apply_date = #{record.paApplyDate,jdbcType=DATE},
+      </if>
+      <if test="record.paAgreeDate != null" >
+        pa_agree_date = #{record.paAgreeDate,jdbcType=DATE},
+      </if>
+      <if test="record.paReportNum != null" >
+        pa_report_num = #{record.paReportNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.paTrainingDate != null" >
+        pa_training_date = #{record.paTrainingDate,jdbcType=DATE},
+      </if>
+      <if test="record.paTy != null" >
+        pa_ty = #{record.paTy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paTyDate != null" >
+        pa_ty_date = #{record.paTyDate,jdbcType=DATE},
+      </if>
+      <if test="record.talkDate != null" >
+        talk_date = #{record.talkDate,jdbcType=DATE},
+      </if>
+      <if test="record.prDate != null" >
+        pr_date = #{record.prDate,jdbcType=DATE},
+      </if>
+      <if test="record.inspectDate != null" >
+        inspect_date = #{record.inspectDate,jdbcType=DATE},
+      </if>
+      <if test="record.preTrialDate != null" >
+        pre_trial_date = #{record.preTrialDate,jdbcType=DATE},
+      </if>
+      <if test="record.pubStartDate != null" >
+        pub_start_date = #{record.pubStartDate,jdbcType=DATE},
+      </if>
+      <if test="record.pubEndDate != null" >
+        pub_end_date = #{record.pubEndDate,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pm_party_activist
+    set pa_id = #{record.paId,jdbcType=INTEGER},
+      pa_apply_date = #{record.paApplyDate,jdbcType=DATE},
+      pa_agree_date = #{record.paAgreeDate,jdbcType=DATE},
+      pa_report_num = #{record.paReportNum,jdbcType=INTEGER},
+      pa_training_date = #{record.paTrainingDate,jdbcType=DATE},
+      pa_ty = #{record.paTy,jdbcType=VARCHAR},
+      pa_ty_date = #{record.paTyDate,jdbcType=DATE},
+      talk_date = #{record.talkDate,jdbcType=DATE},
+      pr_date = #{record.prDate,jdbcType=DATE},
+      inspect_date = #{record.inspectDate,jdbcType=DATE},
+      pre_trial_date = #{record.preTrialDate,jdbcType=DATE},
+      pub_start_date = #{record.pubStartDate,jdbcType=DATE},
+      pub_end_date = #{record.pubEndDate,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.changmq.partymanager.domain.PartyActivist" >
+    update pm_party_activist
+    <set >
+      <if test="paApplyDate != null" >
+        pa_apply_date = #{paApplyDate,jdbcType=DATE},
+      </if>
+      <if test="paAgreeDate != null" >
+        pa_agree_date = #{paAgreeDate,jdbcType=DATE},
+      </if>
+      <if test="paReportNum != null" >
+        pa_report_num = #{paReportNum,jdbcType=INTEGER},
+      </if>
+      <if test="paTrainingDate != null" >
+        pa_training_date = #{paTrainingDate,jdbcType=DATE},
+      </if>
+      <if test="paTy != null" >
+        pa_ty = #{paTy,jdbcType=VARCHAR},
+      </if>
+      <if test="paTyDate != null" >
+        pa_ty_date = #{paTyDate,jdbcType=DATE},
+      </if>
+      <if test="talkDate != null" >
+        talk_date = #{talkDate,jdbcType=DATE},
+      </if>
+      <if test="prDate != null" >
+        pr_date = #{prDate,jdbcType=DATE},
+      </if>
+      <if test="inspectDate != null" >
+        inspect_date = #{inspectDate,jdbcType=DATE},
+      </if>
+      <if test="preTrialDate != null" >
+        pre_trial_date = #{preTrialDate,jdbcType=DATE},
+      </if>
+      <if test="pubStartDate != null" >
+        pub_start_date = #{pubStartDate,jdbcType=DATE},
+      </if>
+      <if test="pubEndDate != null" >
+        pub_end_date = #{pubEndDate,jdbcType=DATE},
+      </if>
+    </set>
+    where pa_id = #{paId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.changmq.partymanager.domain.PartyActivist" >
+    update pm_party_activist
+    set pa_apply_date = #{paApplyDate,jdbcType=DATE},
+      pa_agree_date = #{paAgreeDate,jdbcType=DATE},
+      pa_report_num = #{paReportNum,jdbcType=INTEGER},
+      pa_training_date = #{paTrainingDate,jdbcType=DATE},
+      pa_ty = #{paTy,jdbcType=VARCHAR},
+      pa_ty_date = #{paTyDate,jdbcType=DATE},
+      talk_date = #{talkDate,jdbcType=DATE},
+      pr_date = #{prDate,jdbcType=DATE},
+      inspect_date = #{inspectDate,jdbcType=DATE},
+      pre_trial_date = #{preTrialDate,jdbcType=DATE},
+      pub_start_date = #{pubStartDate,jdbcType=DATE},
+      pub_end_date = #{pubEndDate,jdbcType=DATE}
+    where pa_id = #{paId,jdbcType=INTEGER}
+  </update>
+</mapper>

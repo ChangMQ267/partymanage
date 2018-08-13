@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.changmq.partymanager.DAO.PartyMenberMapper" >
+  <resultMap id="BaseResultMap" type="com.changmq.partymanager.domain.PartyMenber" >
+    <id column="pm_id" property="pmId" jdbcType="INTEGER" />
+    <result column="r_out_id" property="rOutId" jdbcType="INTEGER" />
+    <result column="wyab_no" property="wyabNo" jdbcType="VARCHAR" />
+    <result column="join_date" property="joinDate" jdbcType="DATE" />
+    <result column="jhcu_date" property="jhcuDate" jdbcType="DATE" />
+    <result column="formal_date" property="formalDate" jdbcType="DATE" />
+    <result column="party_standing" property="partyStanding" jdbcType="INTEGER" />
+    <result column="pm_state" property="pmState" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pm_id, r_out_id, wyab_no, join_date, jhcu_date, formal_date, party_standing, pm_state
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.changmq.partymanager.domain.PartyMenberExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pm_party_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pm_party_member
+    where pm_id = #{pmId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pm_party_member
+    where pm_id = #{pmId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.changmq.partymanager.domain.PartyMenberExample" >
+    delete from pm_party_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.changmq.partymanager.domain.PartyMenber" >
+    insert into pm_party_member (pm_id, r_out_id, wyab_no, 
+      join_date, jhcu_date, formal_date, 
+      party_standing, pm_state)
+    values (#{pmId,jdbcType=INTEGER}, #{rOutId,jdbcType=INTEGER}, #{wyabNo,jdbcType=VARCHAR}, 
+      #{joinDate,jdbcType=DATE}, #{jhcuDate,jdbcType=DATE}, #{formalDate,jdbcType=DATE}, 
+      #{partyStanding,jdbcType=INTEGER}, #{pmState,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.changmq.partymanager.domain.PartyMenber" >
+    insert into pm_party_member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pmId != null" >
+        pm_id,
+      </if>
+      <if test="rOutId != null" >
+        r_out_id,
+      </if>
+      <if test="wyabNo != null" >
+        wyab_no,
+      </if>
+      <if test="joinDate != null" >
+        join_date,
+      </if>
+      <if test="jhcuDate != null" >
+        jhcu_date,
+      </if>
+      <if test="formalDate != null" >
+        formal_date,
+      </if>
+      <if test="partyStanding != null" >
+        party_standing,
+      </if>
+      <if test="pmState != null" >
+        pm_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pmId != null" >
+        #{pmId,jdbcType=INTEGER},
+      </if>
+      <if test="rOutId != null" >
+        #{rOutId,jdbcType=INTEGER},
+      </if>
+      <if test="wyabNo != null" >
+        #{wyabNo,jdbcType=VARCHAR},
+      </if>
+      <if test="joinDate != null" >
+        #{joinDate,jdbcType=DATE},
+      </if>
+      <if test="jhcuDate != null" >
+        #{jhcuDate,jdbcType=DATE},
+      </if>
+      <if test="formalDate != null" >
+        #{formalDate,jdbcType=DATE},
+      </if>
+      <if test="partyStanding != null" >
+        #{partyStanding,jdbcType=INTEGER},
+      </if>
+      <if test="pmState != null" >
+        #{pmState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.changmq.partymanager.domain.PartyMenberExample" resultType="java.lang.Integer" >
+    select count(*) from pm_party_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pm_party_member
+    <set >
+      <if test="record.pmId != null" >
+        pm_id = #{record.pmId,jdbcType=INTEGER},
+      </if>
+      <if test="record.rOutId != null" >
+        r_out_id = #{record.rOutId,jdbcType=INTEGER},
+      </if>
+      <if test="record.wyabNo != null" >
+        wyab_no = #{record.wyabNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.joinDate != null" >
+        join_date = #{record.joinDate,jdbcType=DATE},
+      </if>
+      <if test="record.jhcuDate != null" >
+        jhcu_date = #{record.jhcuDate,jdbcType=DATE},
+      </if>
+      <if test="record.formalDate != null" >
+        formal_date = #{record.formalDate,jdbcType=DATE},
+      </if>
+      <if test="record.partyStanding != null" >
+        party_standing = #{record.partyStanding,jdbcType=INTEGER},
+      </if>
+      <if test="record.pmState != null" >
+        pm_state = #{record.pmState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pm_party_member
+    set pm_id = #{record.pmId,jdbcType=INTEGER},
+      r_out_id = #{record.rOutId,jdbcType=INTEGER},
+      wyab_no = #{record.wyabNo,jdbcType=VARCHAR},
+      join_date = #{record.joinDate,jdbcType=DATE},
+      jhcu_date = #{record.jhcuDate,jdbcType=DATE},
+      formal_date = #{record.formalDate,jdbcType=DATE},
+      party_standing = #{record.partyStanding,jdbcType=INTEGER},
+      pm_state = #{record.pmState,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.changmq.partymanager.domain.PartyMenber" >
+    update pm_party_member
+    <set >
+      <if test="rOutId != null" >
+        r_out_id = #{rOutId,jdbcType=INTEGER},
+      </if>
+      <if test="wyabNo != null" >
+        wyab_no = #{wyabNo,jdbcType=VARCHAR},
+      </if>
+      <if test="joinDate != null" >
+        join_date = #{joinDate,jdbcType=DATE},
+      </if>
+      <if test="jhcuDate != null" >
+        jhcu_date = #{jhcuDate,jdbcType=DATE},
+      </if>
+      <if test="formalDate != null" >
+        formal_date = #{formalDate,jdbcType=DATE},
+      </if>
+      <if test="partyStanding != null" >
+        party_standing = #{partyStanding,jdbcType=INTEGER},
+      </if>
+      <if test="pmState != null" >
+        pm_state = #{pmState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pm_id = #{pmId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.changmq.partymanager.domain.PartyMenber" >
+    update pm_party_member
+    set r_out_id = #{rOutId,jdbcType=INTEGER},
+      wyab_no = #{wyabNo,jdbcType=VARCHAR},
+      join_date = #{joinDate,jdbcType=DATE},
+      jhcu_date = #{jhcuDate,jdbcType=DATE},
+      formal_date = #{formalDate,jdbcType=DATE},
+      party_standing = #{partyStanding,jdbcType=INTEGER},
+      pm_state = #{pmState,jdbcType=VARCHAR}
+    where pm_id = #{pmId,jdbcType=INTEGER}
+  </update>
+</mapper>

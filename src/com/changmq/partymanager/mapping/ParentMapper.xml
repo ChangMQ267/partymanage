@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.changmq.partymanager.DAO.ParentMapper" >
+  <resultMap id="BaseResultMap" type="com.changmq.partymanager.domain.Parent" >
+    <id column="p_id" property="pId" jdbcType="INTEGER" />
+    <result column="ps_id" property="psId" jdbcType="INTEGER" />
+    <result column="nation_id" property="nationId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="p_name" property="pName" jdbcType="VARCHAR" />
+    <result column="p_mobile" property="pMobile" jdbcType="VARCHAR" />
+    <result column="p_qq" property="pQq" jdbcType="VARCHAR" />
+    <result column="p_gender" property="pGender" jdbcType="INTEGER" />
+    <result column="p_relation" property="pRelation" jdbcType="VARCHAR" />
+    <result column="p_address" property="pAddress" jdbcType="VARCHAR" />
+    <result column="p_company_name" property="pCompanyName" jdbcType="VARCHAR" />
+    <result column="p_pb_name" property="pPbName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    p_id, ps_id, nation_id, user_id, p_name, p_mobile, p_qq, p_gender, p_relation, p_address, 
+    p_company_name, p_pb_name
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.changmq.partymanager.domain.ParentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pm_user_parent
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pm_user_parent
+    where p_id = #{pId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pm_user_parent
+    where p_id = #{pId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.changmq.partymanager.domain.ParentExample" >
+    delete from pm_user_parent
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.changmq.partymanager.domain.Parent" >
+    insert into pm_user_parent (p_id, ps_id, nation_id, 
+      user_id, p_name, p_mobile, 
+      p_qq, p_gender, p_relation, 
+      p_address, p_company_name, p_pb_name
+      )
+    values (#{pId,jdbcType=INTEGER}, #{psId,jdbcType=INTEGER}, #{nationId,jdbcType=INTEGER}, 
+      #{userId,jdbcType=INTEGER}, #{pName,jdbcType=VARCHAR}, #{pMobile,jdbcType=VARCHAR}, 
+      #{pQq,jdbcType=VARCHAR}, #{pGender,jdbcType=INTEGER}, #{pRelation,jdbcType=VARCHAR}, 
+      #{pAddress,jdbcType=VARCHAR}, #{pCompanyName,jdbcType=VARCHAR}, #{pPbName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.changmq.partymanager.domain.Parent" >
+    insert into pm_user_parent
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pId != null" >
+        p_id,
+      </if>
+      <if test="psId != null" >
+        ps_id,
+      </if>
+      <if test="nationId != null" >
+        nation_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="pName != null" >
+        p_name,
+      </if>
+      <if test="pMobile != null" >
+        p_mobile,
+      </if>
+      <if test="pQq != null" >
+        p_qq,
+      </if>
+      <if test="pGender != null" >
+        p_gender,
+      </if>
+      <if test="pRelation != null" >
+        p_relation,
+      </if>
+      <if test="pAddress != null" >
+        p_address,
+      </if>
+      <if test="pCompanyName != null" >
+        p_company_name,
+      </if>
+      <if test="pPbName != null" >
+        p_pb_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pId != null" >
+        #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="psId != null" >
+        #{psId,jdbcType=INTEGER},
+      </if>
+      <if test="nationId != null" >
+        #{nationId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="pName != null" >
+        #{pName,jdbcType=VARCHAR},
+      </if>
+      <if test="pMobile != null" >
+        #{pMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="pQq != null" >
+        #{pQq,jdbcType=VARCHAR},
+      </if>
+      <if test="pGender != null" >
+        #{pGender,jdbcType=INTEGER},
+      </if>
+      <if test="pRelation != null" >
+        #{pRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="pAddress != null" >
+        #{pAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="pCompanyName != null" >
+        #{pCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="pPbName != null" >
+        #{pPbName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.changmq.partymanager.domain.ParentExample" resultType="java.lang.Integer" >
+    select count(*) from pm_user_parent
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pm_user_parent
+    <set >
+      <if test="record.pId != null" >
+        p_id = #{record.pId,jdbcType=INTEGER},
+      </if>
+      <if test="record.psId != null" >
+        ps_id = #{record.psId,jdbcType=INTEGER},
+      </if>
+      <if test="record.nationId != null" >
+        nation_id = #{record.nationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pName != null" >
+        p_name = #{record.pName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pMobile != null" >
+        p_mobile = #{record.pMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pQq != null" >
+        p_qq = #{record.pQq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pGender != null" >
+        p_gender = #{record.pGender,jdbcType=INTEGER},
+      </if>
+      <if test="record.pRelation != null" >
+        p_relation = #{record.pRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pAddress != null" >
+        p_address = #{record.pAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pCompanyName != null" >
+        p_company_name = #{record.pCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pPbName != null" >
+        p_pb_name = #{record.pPbName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pm_user_parent
+    set p_id = #{record.pId,jdbcType=INTEGER},
+      ps_id = #{record.psId,jdbcType=INTEGER},
+      nation_id = #{record.nationId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      p_name = #{record.pName,jdbcType=VARCHAR},
+      p_mobile = #{record.pMobile,jdbcType=VARCHAR},
+      p_qq = #{record.pQq,jdbcType=VARCHAR},
+      p_gender = #{record.pGender,jdbcType=INTEGER},
+      p_relation = #{record.pRelation,jdbcType=VARCHAR},
+      p_address = #{record.pAddress,jdbcType=VARCHAR},
+      p_company_name = #{record.pCompanyName,jdbcType=VARCHAR},
+      p_pb_name = #{record.pPbName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.changmq.partymanager.domain.Parent" >
+    update pm_user_parent
+    <set >
+      <if test="psId != null" >
+        ps_id = #{psId,jdbcType=INTEGER},
+      </if>
+      <if test="nationId != null" >
+        nation_id = #{nationId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="pName != null" >
+        p_name = #{pName,jdbcType=VARCHAR},
+      </if>
+      <if test="pMobile != null" >
+        p_mobile = #{pMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="pQq != null" >
+        p_qq = #{pQq,jdbcType=VARCHAR},
+      </if>
+      <if test="pGender != null" >
+        p_gender = #{pGender,jdbcType=INTEGER},
+      </if>
+      <if test="pRelation != null" >
+        p_relation = #{pRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="pAddress != null" >
+        p_address = #{pAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="pCompanyName != null" >
+        p_company_name = #{pCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="pPbName != null" >
+        p_pb_name = #{pPbName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where p_id = #{pId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.changmq.partymanager.domain.Parent" >
+    update pm_user_parent
+    set ps_id = #{psId,jdbcType=INTEGER},
+      nation_id = #{nationId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      p_name = #{pName,jdbcType=VARCHAR},
+      p_mobile = #{pMobile,jdbcType=VARCHAR},
+      p_qq = #{pQq,jdbcType=VARCHAR},
+      p_gender = #{pGender,jdbcType=INTEGER},
+      p_relation = #{pRelation,jdbcType=VARCHAR},
+      p_address = #{pAddress,jdbcType=VARCHAR},
+      p_company_name = #{pCompanyName,jdbcType=VARCHAR},
+      p_pb_name = #{pPbName,jdbcType=VARCHAR}
+    where p_id = #{pId,jdbcType=INTEGER}
+  </update>
+</mapper>

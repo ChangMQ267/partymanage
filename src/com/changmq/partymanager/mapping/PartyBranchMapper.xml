@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.changmq.partymanager.DAO.PartyBranchMapper" >
+  <resultMap id="BaseResultMap" type="com.changmq.partymanager.domain.PartyBranch" >
+    <id column="pb_id" property="pbId" jdbcType="INTEGER" />
+    <result column="pb_name" property="pbName" jdbcType="VARCHAR" />
+    <result column="gpb_name" property="gpbName" jdbcType="VARCHAR" />
+    <result column="all_num" property="allNum" jdbcType="INTEGER" />
+    <result column="activist_num" property="activistNum" jdbcType="INTEGER" />
+    <result column="deve_num" property="deveNum" jdbcType="INTEGER" />
+    <result column="prob_num" property="probNum" jdbcType="INTEGER" />
+    <result column="party_num" property="partyNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pb_id, pb_name, gpb_name, all_num, activist_num, deve_num, prob_num, party_num
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.changmq.partymanager.domain.PartyBranchExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pm_party_branch
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pm_party_branch
+    where pb_id = #{pbId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pm_party_branch
+    where pb_id = #{pbId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.changmq.partymanager.domain.PartyBranchExample" >
+    delete from pm_party_branch
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.changmq.partymanager.domain.PartyBranch" >
+    insert into pm_party_branch (pb_id, pb_name, gpb_name, 
+      all_num, activist_num, deve_num, 
+      prob_num, party_num)
+    values (#{pbId,jdbcType=INTEGER}, #{pbName,jdbcType=VARCHAR}, #{gpbName,jdbcType=VARCHAR}, 
+      #{allNum,jdbcType=INTEGER}, #{activistNum,jdbcType=INTEGER}, #{deveNum,jdbcType=INTEGER}, 
+      #{probNum,jdbcType=INTEGER}, #{partyNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.changmq.partymanager.domain.PartyBranch" >
+    insert into pm_party_branch
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pbId != null" >
+        pb_id,
+      </if>
+      <if test="pbName != null" >
+        pb_name,
+      </if>
+      <if test="gpbName != null" >
+        gpb_name,
+      </if>
+      <if test="allNum != null" >
+        all_num,
+      </if>
+      <if test="activistNum != null" >
+        activist_num,
+      </if>
+      <if test="deveNum != null" >
+        deve_num,
+      </if>
+      <if test="probNum != null" >
+        prob_num,
+      </if>
+      <if test="partyNum != null" >
+        party_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pbId != null" >
+        #{pbId,jdbcType=INTEGER},
+      </if>
+      <if test="pbName != null" >
+        #{pbName,jdbcType=VARCHAR},
+      </if>
+      <if test="gpbName != null" >
+        #{gpbName,jdbcType=VARCHAR},
+      </if>
+      <if test="allNum != null" >
+        #{allNum,jdbcType=INTEGER},
+      </if>
+      <if test="activistNum != null" >
+        #{activistNum,jdbcType=INTEGER},
+      </if>
+      <if test="deveNum != null" >
+        #{deveNum,jdbcType=INTEGER},
+      </if>
+      <if test="probNum != null" >
+        #{probNum,jdbcType=INTEGER},
+      </if>
+      <if test="partyNum != null" >
+        #{partyNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.changmq.partymanager.domain.PartyBranchExample" resultType="java.lang.Integer" >
+    select count(*) from pm_party_branch
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pm_party_branch
+    <set >
+      <if test="record.pbId != null" >
+        pb_id = #{record.pbId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pbName != null" >
+        pb_name = #{record.pbName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gpbName != null" >
+        gpb_name = #{record.gpbName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allNum != null" >
+        all_num = #{record.allNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.activistNum != null" >
+        activist_num = #{record.activistNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.deveNum != null" >
+        deve_num = #{record.deveNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.probNum != null" >
+        prob_num = #{record.probNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.partyNum != null" >
+        party_num = #{record.partyNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pm_party_branch
+    set pb_id = #{record.pbId,jdbcType=INTEGER},
+      pb_name = #{record.pbName,jdbcType=VARCHAR},
+      gpb_name = #{record.gpbName,jdbcType=VARCHAR},
+      all_num = #{record.allNum,jdbcType=INTEGER},
+      activist_num = #{record.activistNum,jdbcType=INTEGER},
+      deve_num = #{record.deveNum,jdbcType=INTEGER},
+      prob_num = #{record.probNum,jdbcType=INTEGER},
+      party_num = #{record.partyNum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.changmq.partymanager.domain.PartyBranch" >
+    update pm_party_branch
+    <set >
+      <if test="pbName != null" >
+        pb_name = #{pbName,jdbcType=VARCHAR},
+      </if>
+      <if test="gpbName != null" >
+        gpb_name = #{gpbName,jdbcType=VARCHAR},
+      </if>
+      <if test="allNum != null" >
+        all_num = #{allNum,jdbcType=INTEGER},
+      </if>
+      <if test="activistNum != null" >
+        activist_num = #{activistNum,jdbcType=INTEGER},
+      </if>
+      <if test="deveNum != null" >
+        deve_num = #{deveNum,jdbcType=INTEGER},
+      </if>
+      <if test="probNum != null" >
+        prob_num = #{probNum,jdbcType=INTEGER},
+      </if>
+      <if test="partyNum != null" >
+        party_num = #{partyNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pb_id = #{pbId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.changmq.partymanager.domain.PartyBranch" >
+    update pm_party_branch
+    set pb_name = #{pbName,jdbcType=VARCHAR},
+      gpb_name = #{gpbName,jdbcType=VARCHAR},
+      all_num = #{allNum,jdbcType=INTEGER},
+      activist_num = #{activistNum,jdbcType=INTEGER},
+      deve_num = #{deveNum,jdbcType=INTEGER},
+      prob_num = #{probNum,jdbcType=INTEGER},
+      party_num = #{partyNum,jdbcType=INTEGER}
+    where pb_id = #{pbId,jdbcType=INTEGER}
+  </update>
+</mapper>
